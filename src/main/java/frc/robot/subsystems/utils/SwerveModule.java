@@ -5,7 +5,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.simulation.Motor;
 
-import static frc.robot.Constants.SwerveChassisConstants.*;
+import static frc.robot.Constants.*;
 
 public class SwerveModule {
     private Motor moveMotor;
@@ -16,23 +16,42 @@ public class SwerveModule {
         angleMotor = new Motor();
     }
 
+    /**
+     * Forces the module to completely stop
+     */
     public void stop() {
         moveMotor.setVelocity(0);
         angleMotor.setVelocity(0);
     }
 
+    /**
+     * Sets the move velocity of the module
+     * @param v Velocity in m/s
+     */
     public void setVelocity(double v) {
         moveMotor.setVelocity(v);
     }
 
+    /**
+     * Returns the move velocity of the module
+     * @return Velocity in m/s
+     */
     public double getVelocity() {
         return moveMotor.getVelocity();
     } 
 
+    /**
+     * Returns the distance the module drove
+     * @return Distance in encoder pulses
+     */
     public double getDistance() {
         return moveMotor.getDistance();
     }
 
+    /**
+     * Sets the angle of the module
+     * @param angle
+     */
     public void setAngle(Rotation2d angle) {
         angleMotor.setPosition(calculateTarget(angle.getDegrees()));
     }
@@ -41,15 +60,25 @@ public class SwerveModule {
         return Rotation2d.fromDegrees(angleMotor.getDistance());
     }
 
+    /**
+     * Sets the state of the module (drive speed and angle)
+     * @param state
+     */
     public void setState(SwerveModuleState state) {
         setVelocity(state.speedMetersPerSecond);
         setAngle(state.angle);
     }
 
+    /**
+     * Returns the position state of the module
+     */
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(getDistance(), getAngle());
     }
 
+     /**
+      * Updates the simulation motor and gyro
+      */
     public void update() {
         moveMotor.update();
         angleMotor.update();

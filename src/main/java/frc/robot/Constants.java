@@ -5,8 +5,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
-  public static final double JOYSTICK_DEADBAND = 0.1;
+  public static final double JOYSTICK_DEADBAND = 0.2;
+
   public static final double PULSES_PER_METER = 1;
+  public static final double PULSE_PER_DEGREE = 1;
 
   public static class DifferentialChassisConstants {
     public static final double DRIVE_SPEED = 4;
@@ -24,8 +26,6 @@ public final class Constants {
             FRONT_LEFT.modulePosition, FRONT_RIGHT.modulePosition,
             BACK_LEFT.modulePosition, BACK_RIGHT.modulePosition
     );
-
-    public static final double PULSE_PER_DEGREE = 1;
 
     public static final double DRIVE_SPEED = 4.5;
     public static final double ROTATION_SPEED = 270;

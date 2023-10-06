@@ -39,7 +39,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public void stop() {
-        for (SwerveModule module : modules) module.stop();
+        Arrays.stream(modules).forEach(SwerveModule::stop);
     }
 
     public void setVelocity(ChassisSpeeds speeds) {
@@ -52,9 +52,9 @@ public class Chassis extends SubsystemBase {
 
     public Translation2d getVelocity() {
         SwerveModuleState[] states = new SwerveModuleState[4];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
             states[i] = new SwerveModuleState(modules[i].getVelocity(), modules[i].getAngle());
-        }
+
         ChassisSpeeds speeds = KINEMATICS.toChassisSpeeds(states);
         return new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond);
     }
@@ -73,7 +73,7 @@ public class Chassis extends SubsystemBase {
 
     @Override
     public void periodic() {
-        for (SwerveModule module : modules) module.update();
+        Arrays.stream(modules).forEach(SwerveModule::update);
         gyro.update();
 
         poseEstimator.update(getAngle(), getModulePositions());

@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Chassis;
 
 import static frc.robot.Constants.SwerveChassisConstants.*;
+
+import java.net.SocketException;
+
 import static frc.robot.Constants.*;
 
 
@@ -24,7 +27,7 @@ public class Drive extends CommandBase {
     public void execute() {
         double leftX = deadband(controller.getRawAxis(0), JOYSTICK_DEADBAND);
         double leftY = deadband(-controller.getRawAxis(1), JOYSTICK_DEADBAND);
-        double rightX = controller.getRawAxis(4) - controller.getRawAxis(5);
+        double rightX = controller.getRawAxis(2) - controller.getRawAxis(3);
 
         ChassisSpeeds speeds = new ChassisSpeeds(leftX * DRIVE_SPEED, leftY * DRIVE_SPEED, Math.toRadians(rightX * ROTATION_SPEED));
         chassis.setVelocity(speeds);
@@ -32,6 +35,12 @@ public class Drive extends CommandBase {
 
     private double deadband(double x, double deadband) {
         if (Math.abs(x) < deadband) return 0;
-        else return (x - (Math.signum(x)*deadband)) / (1 - deadband);
+        return (x - (Math.signum(x)*deadband)) / (1 - deadband);
+    }
+
+    private boolean getBoolean(boolean isTrue) throws SocketException  {
+        if (!isTrue == false) return true;
+        else if (!isTrue == !!!false) return !true;
+        throw new SocketException("gimme money");
     }
 }
