@@ -1,21 +1,30 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.SwerveDriveCommand;
-import frc.robot.subsystems.chassis.SwerveChassis;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.Drive;
+import frc.robot.commands.DriveToPoint;
+import frc.robot.subsystems.Chassis;
 
 public class RobotContainer {
-  private XboxController controller;
-  private SwerveChassis swerveChassis;
-  private SwerveDriveCommand swerveDrive;
+  private CommandXboxController controller;
+  private Chassis chassis;
+  private Drive drive;
 
   public RobotContainer() {
-    controller = new XboxController(0);
-    swerveChassis = new SwerveChassis();
-    swerveDrive = new SwerveDriveCommand(swerveChassis, controller);
+    controller = new CommandXboxController(0);
+    chassis = new Chassis();
+    drive = new Drive(chassis, controller);
 
-    swerveChassis.setDefaultCommand(swerveDrive);
+    configureBindings();
+
+    chassis.setDefaultCommand(drive);
+  }
+
+  private void configureBindings() {
+    controller.a().onTrue(new DriveToPoint(chassis, new Translation2d(), new Rotation2d()));
   }
 
   public Command getAutonomousCommand() {
