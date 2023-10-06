@@ -77,7 +77,7 @@ public class SwerveModule {
     }
 
      /**
-      * Updates the simulation motor and gyro
+      * Updates the simulation motors
       */
     public void update() {
         moveMotor.update();
