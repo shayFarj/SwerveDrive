@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Drive;
+import frc.robot.commands.DriveRoute;
 import frc.robot.commands.DriveToPoint;
 import frc.robot.subsystems.Chassis;
 
@@ -25,6 +26,12 @@ public class RobotContainer {
 
   private void configureBindings() {
     controller.a().onTrue(new DriveToPoint(chassis, new Translation2d(), new Rotation2d()));
+    controller.b().onTrue(new DriveRoute(chassis, new Translation2d[] {
+      new Translation2d(3, 5),
+      new Translation2d(2, 8),
+      new Translation2d(5, 1),
+      new Translation2d(7, 2),
+    }));
   }
 
   public Command getAutonomousCommand() {

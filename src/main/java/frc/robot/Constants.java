@@ -7,8 +7,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 public final class Constants {
   public static final double JOYSTICK_DEADBAND = 0.2;
 
-  public static final double PULSES_PER_METER = 1;
-  public static final double PULSE_PER_DEGREE = 1;
+  public static final double PULSES_PER_METER = 50000;
+  public static final double PULSES_PER_DEGREE = 2000;
 
   public static class DifferentialChassisConstants {
     public static final double DRIVE_SPEED = 4;

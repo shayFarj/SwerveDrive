@@ -1,19 +1,21 @@
 package frc.robot.simulation;
 
-import static frc.robot.Constants.*;
-
 public class Motor {
     private double velocity;
     private double pulses;
 
     /**
      * Updates the motor velocity
-     * @param v Velocity in m/s
+     * @param v Velocity in p/0.1s
      */
     public void setVelocity(double v) {
         velocity = v;
     }
 
+    /**
+     * Returns the motor velocity
+     * @return Velocity in p/0.1s
+     */
     public double getVelocity() {
         return velocity;
     }
@@ -23,7 +25,7 @@ public class Motor {
     }
 
     public void update() {
-        pulses += velocity * 0.02 * PULSES_PER_METER;
+        pulses += velocity * 10 * 0.02;
     }
 
     /**

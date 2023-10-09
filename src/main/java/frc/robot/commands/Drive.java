@@ -7,8 +7,6 @@ import frc.robot.subsystems.Chassis;
 
 import static frc.robot.Constants.SwerveChassisConstants.*;
 
-import java.net.SocketException;
-
 import static frc.robot.Constants.*;
 
 
@@ -36,11 +34,5 @@ public class Drive extends CommandBase {
     private double deadband(double x, double deadband) {
         if (Math.abs(x) < deadband) return 0;
         return (x - (Math.signum(x)*deadband)) / (1 - deadband);
-    }
-
-    private boolean getBoolean(boolean isTrue) throws SocketException  {
-        if (!isTrue == false) return true;
-        else if (!isTrue == !!!false) return !true;
-        throw new SocketException("gimme money");
     }
 }

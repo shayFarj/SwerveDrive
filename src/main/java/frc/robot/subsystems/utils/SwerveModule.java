@@ -29,7 +29,7 @@ public class SwerveModule {
      * @param v Velocity in m/s
      */
     public void setVelocity(double v) {
-        moveMotor.setVelocity(v);
+        moveMotor.setVelocity(v * PULSES_PER_METER / 10);
     }
 
     /**
@@ -37,7 +37,7 @@ public class SwerveModule {
      * @return Velocity in m/s
      */
     public double getVelocity() {
-        return moveMotor.getVelocity();
+        return moveMotor.getVelocity() / PULSES_PER_METER * 10;
     } 
 
     /**
@@ -57,7 +57,7 @@ public class SwerveModule {
     }
 
     public Rotation2d getAngle() {
-        return Rotation2d.fromDegrees(angleMotor.getDistance());
+        return Rotation2d.fromDegrees(angleMotor.getDistance() / PULSES_PER_DEGREE);
     }
 
     /**
@@ -73,7 +73,7 @@ public class SwerveModule {
      * Returns the position state of the module
      */
     public SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(getDistance(), getAngle());
+        return new SwerveModulePosition(getDistance() / PULSES_PER_METER, getAngle());
     }
 
      /**
@@ -91,6 +91,6 @@ public class SwerveModule {
 
     private double calculateTarget(double targetAngle) {
         double difference = getAngleDifference(getAngle().getDegrees(), targetAngle);
-        return angleMotor.getDistance() + (difference * PULSE_PER_DEGREE);
+        return angleMotor.getDistance() + (difference * PULSES_PER_DEGREE);
     }
 }
