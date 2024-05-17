@@ -33,10 +33,10 @@ public class RobotContainer {
       new Translation2d(5, 1),
       new Translation2d(7, 2),
     }));
-    controller.x().onTrue(new CurveCommand(chassis, 3));
+    controller.x().onTrue(new CurveCommand(chassis, 4));
   }
 
   public Command getAutonomousCommand() {
-    return new CurveCommand(chassis, 4);
+    return null;
   }
 }

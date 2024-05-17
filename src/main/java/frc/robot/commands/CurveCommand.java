@@ -9,55 +9,43 @@ import frc.robot.subsystems.Chassis;
 
 public class CurveCommand extends CommandBase {
     private Chassis chassis;
-    private double maxVelocity;
+    private double timeSeconds;
+
     private Translation2d p0;
     private Translation2d p1;
     private Translation2d handle;
 
     private double time;
-    private double startVelocity;
-    private double endVelocity;
 
-    public CurveCommand(Chassis chassis, double maxVelocity) {
+    public CurveCommand(Chassis chassis, double timeSeconds) {
         this.chassis = chassis;
-        this.maxVelocity = maxVelocity;
+        this.timeSeconds = timeSeconds;
 
         p0 = new Translation2d(0, 0);
-        p1 = new Translation2d(3.5, 0.5);
-        handle = new Translation2d(-0.5, 2);
+        p1 = new Translation2d(3.5, 1.5);
+        handle = new Translation2d(2, 2.5);
+
+        addRequirements(chassis);
     }
     
     @Override
     public void initialize() {
         time = 0;
-        startVelocity = 0;
-        endVelocity = 0;
     }
 
     @Override
     public void execute() {
         Translation2d b = calculatePoint(p0, p1, handle, time);
         Translation2d dx = b.minus(chassis.getPose().getTranslation());
-        chassis.setVelocity(new ChassisSpeeds(dx.getX() / 0.02, dx.getY() / 0.02, 0));
-
-        time += 0.02;
+        System.out.println("b = " + b + " dx = " + dx + " t = " + time);
+        chassis.setVelocity(new ChassisSpeeds(dx.getX() / 0.02 / timeSeconds, dx.getY() / timeSeconds / 0.02, 0));
+        
+        time += 0.02 / timeSeconds;
     }
 
     @Override
     public boolean isFinished() {
         return chassis.getPose().getTranslation().getDistance(p1) <= 0.2;
-    }
-
-    private double getTotalTime(double velocity) {
-        return getCurveDistance(p0, p1, handle) / maxVelocity;
-    }
-
-    private double getSlope(Translation2d p0, Translation2d p1) {
-        return (p1.getY() - p0.getY()) / (p1.getX() - p0.getX());
-    }
-
-    private double getFunction(double x, Translation2d p0, Translation2d p1) {
-        return getSlope(p0, p1) * (x - p0.getX()) + p0.getY();
     }
 
     private Translation2d calculatePoint(Translation2d p0, Translation2d p1, Translation2d anchor, double time) {
