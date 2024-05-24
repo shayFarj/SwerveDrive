@@ -11,7 +11,6 @@ import frc.robot.subsystems.Chassis;
 
 public class CurveCommand extends CommandBase {
     private Chassis chassis;
-    private double timeSeconds;
 
     private Translation2d p0;
     private Translation2d p1;
@@ -20,9 +19,8 @@ public class CurveCommand extends CommandBase {
     private double passedDistance;
     private List<Double> distancesLUT;
 
-    public CurveCommand(Chassis chassis, double timeSeconds, Translation2d p0, Translation2d p1, Translation2d handle) {
+    public CurveCommand(Chassis chassis, Translation2d p0, Translation2d p1, Translation2d handle) {
         this.chassis = chassis;
-        this.timeSeconds = timeSeconds;
         this.p0 = p0;
         this.p1 = p1;
         this.handle = handle;
@@ -43,7 +41,7 @@ public class CurveCommand extends CommandBase {
         Translation2d b = calculatePoint(p0, p1, handle, distanceToTime(distancesLUT, passedDistance));
         Translation2d dx = b.minus(chassis.getPose().getTranslation());
         Rotation2d dRot = dx.getAngle().minus(chassis.getAngle());
-        chassis.setVelocity(new ChassisSpeeds(dx.getX() / 0.02 / timeSeconds, dx.getY() / timeSeconds / 0.02, dRot.getRadians() / 0.02));
+        chassis.setVelocity(new ChassisSpeeds(dx.getX() / 0.02, dx.getY() / 0.02, dRot.getRadians() / 0.02));
         
         passedDistance += 4 * 0.02;
     }

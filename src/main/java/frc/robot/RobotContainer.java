@@ -34,8 +34,8 @@ public class RobotContainer {
       new Translation2d(7, 2),
     }));
     controller.x().onTrue(
-      new CurveCommand(chassis, 2, new Translation2d(0, 0), new Translation2d(3.5, 1.5), new Translation2d(2, 2.5))
-      .andThen(new CurveCommand(chassis, 3.5, new Translation2d(3.5, 1.5), new Translation2d(8.5, 4.5), new Translation2d(0.5, 4.5))));
+      new CurveCommand(chassis, new Translation2d(0, 0), new Translation2d(3.5, 1.5), new Translation2d(2, 2.5))
+      .andThen(new CurveCommand(chassis, new Translation2d(3.5, 1.5), new Translation2d(8.5, 4.5), new Translation2d(0.5, 4.5))));
   }
 
   public Command getAutonomousCommand() {
